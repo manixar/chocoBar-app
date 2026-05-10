@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/Layout/Layout'
-import Button from '../components/Button/Button'
 
 import styled from 'styled-components'
 
@@ -26,8 +25,7 @@ export default function Home() {
                     <Link href="/about/about">About</Link>
                 </main>
             </Layout>
-            <Button type="primary">
-Click Here            </Button>
+
         </div>
     )
 }

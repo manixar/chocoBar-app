@@ -1,23 +1,11 @@
 import React from "react";
-import { css, cx } from "@emotion/css";
-import {type} from "node:os";
+import styles from "./button.module.scss";
 
-const Button =({ children , type }) => (
-    <button
-    className={css`
-    padding: 8px;
-        border: none;
-        cursor: pointer;
-        //if my button is primary,bgcolor is pink but if not, bgcolor is blue
-        background-color: ${type === 'primary'?'hotpink':'blue'};
-        border-radius: 15px;
-        &:hover {
-            background-color: transparent;
-            transition: all 0.5s ease;
-        }
-    `}
-    >
+const Button =({ children , type = 'button' }) => (
+    <div className={styles.buttonContainer}>
+    <button type={type}>
         {children}
     </button>
+    </div>
 )
 export default Button;

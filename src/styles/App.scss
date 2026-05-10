@@ -1,7 +1,32 @@
-* {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background: #fafafa;
-  font-size: 30px;
+:root {
+  font-family: var(--font-shabnam), sans-serif;
 }
+
+.buttonContainer button {
+  font-family: var(--font-shabnam);
+  padding: 12px 16px;
+  border: none;
+  background: #d2197c;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.title {
+  font-family: var(--font-shabnam);
+  font-weight: 700;
+}
+
+.text-light {
+  font-family: var(--font-shabnam);
+  font-weight: 300;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+   font-family:"Shabnam" , sans-serif;
+   background: #fafafa;
+   font-size: 20px;
+ }
