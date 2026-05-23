@@ -1,10 +1,19 @@
-import React from 'react'
-import Header from "./Header/header";
+"use client";
 
-const Layout = ({ children }) => (
-    <div>
+import { usePathname } from "next/navigation";
+import Header from "./Header/header";
+import Footer from "./Footer/footer";
+
+const Layout = ({ children }) => {
+  const pathname = usePathname();
+  const isDashboard = pathname.startsWith("/dashboard");
+  return (
+    <>
       <Header />
-        {children}
-    </div>
-)
-export default Layout
+      {children}
+      <Footer />
+    </>
+  );
+};
+
+export default Layout;

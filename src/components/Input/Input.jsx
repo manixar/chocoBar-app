@@ -1,6 +1,6 @@
 import styles from "./input.module.scss";
 
-const Input = ({ type = "text", placeholder, onChange }) => {
+const Input = ({ type = "text", placeholder, onChange, ...props }) => {
 
     const handleOnChange = (event) => {
         if (onChange) {
@@ -8,14 +8,14 @@ const Input = ({ type = "text", placeholder, onChange }) => {
         }
     };
 
-
     return (
         <div className={styles.inputContainer}>
             <input
                 className={styles.customInput}
-                onChange={handleOnChange}
                 type={type}
                 placeholder={placeholder}
+                onChange={handleOnChange}
+                {...props}
             />
         </div>
     );
