@@ -3,6 +3,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from "../theme/theme";
 import "../styles/App.scss";
 import localFont from "next/font/local";
+import { CartProvider } from "@/context/CartContext";
+// import Layout from "../components/Layout/Layout";
 
 const shabnam = localFont({
   src: [
@@ -35,9 +37,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className={`${shabnam.variable} ${shabnam.className}`}>
-        <Component {...pageProps} />
-      </div>
+      <CartProvider>
+        <div className={`${shabnam.variable} ${shabnam.className}`}>
+          <Component {...pageProps} />
+        </div>
+      </CartProvider>
     </ThemeProvider>
   );
 }

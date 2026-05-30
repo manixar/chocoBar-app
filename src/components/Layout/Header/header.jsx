@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import Menu from "@mui/material/Menu";
+import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
@@ -14,8 +15,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import { underline } from "next/dist/lib/picocolors";
+
+import { useContext } from "react";
+import { CartContext } from "../../../context/CartContext";
 
 const menuItems = [
   "کیک",
@@ -69,6 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const { totalItems } = useContext(CartContext);
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -241,7 +244,9 @@ export default function Header() {
           }}
         >
           <IconButton color="inherit" onClick={handleCart} sx={{ ml: 0.5 }}>
-            <ShoppingCartOutlinedIcon />
+            <Badge badgeContent={totalItems} color="error">
+              <ShoppingCartOutlinedIcon />
+            </Badge>
           </IconButton>
         </Box>
       </Toolbar>
