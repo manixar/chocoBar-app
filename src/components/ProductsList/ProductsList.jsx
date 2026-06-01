@@ -13,51 +13,131 @@ import ProductSlider from "../ProductSlider/ProductSlider";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import styled from "styled-components";
+import RemoveIcon from "@mui/icons-material";
+import AddIcon from "@mui/icons-material";
+import { useCart } from "../../context/CartContext";
 
-const DetailButton = styled(Button)(({ theme }) => ({
-  borderRadius: "40px",
-  padding: "8px 16px",
-  background: "transparent",
-  color: "#4b2c20",
-  fontWeight: "600",
-  textTransform: "none",
-  fontSize: "14px",
-  border: "1px solid #4b2c20",
-  transition: "all 0.1s ease",
-  "&:hover": {
-    background: "#4b2c20",
-    color: "white",
-    border: "1.5px solid #4b2c20",
-  },
-}));
+// استایل دکمه جزئیات محصول
+const DetailButton = styled.button`
+  width: 100%;
+  border-radius: 40px;
+  padding: 8px 16px;
+  background: transparent;
+  color: #4b2c20;
+  font-weight: 600;
+  text-transform: none;
+  font-size: 13px;
+  border: 1.5px solid #4b2c20;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
 
-const BuyButton = styled(Button)(({ theme }) => ({
-  borderRadius: "40px",
-  padding: "8px 16px",
-  background: "#4b2c20",
-  color: "white",
-  fontWeight: 600,
-  textTransform: "none",
-  fontSize: "13px",
-  gap: "6px",
-  transition: "all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
-  "&:hover": {
-    background: "#3a2218",
-    gap: "10px",
-    boxShadow: "0 4px 12px rgba(75, 44, 32, 0.3)",
-    "& .MuiButton-endIcon": {
-      transform: "translateX(4px)",
-    },
-  },
-  "& .MuiButton-endIcon": {
-    transition: "transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
-  },
-}));
+  &:hover {
+    background: #4b2c20;
+    color: white;
+    transform: translateY(-2px);
+  }
+`;
 
+// استایل دکمه خرید
+const BuyButton = styled.button`
+  width: 100%;
+  border-radius: 40px;
+  padding: 8px 16px;
+  background: #4b2c20;
+  color: white;
+  font-weight: 600;
+  text-transform: none;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-family: inherit;
+
+  &:hover {
+    background: #3a2218;
+    gap: 10px;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(75, 44, 32, 0.3);
+  }
+
+  &:hover svg {
+    transform: translateX(4px);
+  }
+
+  svg {
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+`;
+
+// استایل کنترلگر تعداد
+const QuantityWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  border-radius: 40px;
+  padding: 4px;
+  gap: 8px;
+  width: 100%;
+`;
+
+const QuantityButtonStyled = styled.button`
+  background-color: #4b2c20;
+  color: white;
+  padding: 6px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #3a2218;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  svg {
+    font-size: 16px;
+  }
+`;
+
+const QuantityText = styled.span`
+  font-weight: 600;
+  font-size: 16px;
+  min-width: 30px;
+  text-align: center;
+  color: #4b2c20;
+`;
+const QuantityButton = ({ quantity, onIncrease, onDecrease }) => {
+  return (
+    <QuantityWrapper>
+      <QuantityButtonStyled onClick={onDecrease} disabled={quantity === 0}>
+        <RemoveIcon />
+      </QuantityButtonStyled>
+      <QuantityText>{quantity}</QuantityText>
+      <QuantityButtonStyled onClick={onIncrease}>
+        <AddIcon />
+      </QuantityButtonStyled>
+    </QuantityWrapper>
+  );
+};
 export default function ProductsList() {
-  const theme = useTheme();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, removeFromCart, getProductQuantity } = useCart();
   const sliderRef = useRef();
+
   const bestSellers = [
     {
       id: 1,
@@ -124,8 +204,16 @@ export default function ProductsList() {
   ];
 
   const handleIncrease = (product) => {
-    console.log("افزودن محصول", product);
+    console.log("محصول", product, "اضافه شد");
     addToCart(product);
+  };
+
+  const handleDecrease = (product) => {
+    console.log("محصول", product, "حذف شد");
+  };
+
+  const handleDetailClick = (product) => {
+    alert(`جزئیات محصول: ${product.title}\nقیمت: $${product.price}`);
   };
 
   return (
