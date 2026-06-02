@@ -13,11 +13,10 @@ import ProductSlider from "../ProductSlider/ProductSlider";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import styled from "styled-components";
-import RemoveIcon from "@mui/icons-material";
-import AddIcon from "@mui/icons-material";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 import { useCart } from "../../context/CartContext";
 
-// استایل دکمه جزئیات محصول
 const DetailButton = styled.button`
   width: 100%;
   border-radius: 40px;
@@ -39,7 +38,6 @@ const DetailButton = styled.button`
   }
 `;
 
-// استایل دکمه خرید
 const BuyButton = styled.button`
   width: 100%;
   border-radius: 40px;
@@ -74,7 +72,6 @@ const BuyButton = styled.button`
   }
 `;
 
-// استایل کنترلگر تعداد
 const QuantityWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -210,6 +207,7 @@ export default function ProductsList() {
 
   const handleDecrease = (product) => {
     console.log("محصول", product, "حذف شد");
+    removeFromCart(product);
   };
 
   const handleDetailClick = (product) => {
@@ -220,70 +218,64 @@ export default function ProductsList() {
     <Box
       sx={{
         backgroundColor: "transparent",
+
         overflow: "hidden",
         mt: 15,
         mb: 10,
-        pt: 6,
-        pb: 8,
+        py: 6,
+        px: { xs: 2, sm: 4, md: 8 },
         position: "relative",
       }}
     >
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
-          mb: 2,
+          mb: 4,
+          flexWrap: "wrap",
+          gap: 2,
+          position: "relative",
+          zIndex: 2,
         }}
       >
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <IconButton
+            onClick={() => sliderRef.current?.handleScroll("left")}
+            sx={{
+              p: 1.5,
+              backgroundColor: "rgba(233, 150, 122, 0.5)",
+              "&:hover": {
+                backgroundColor: "#4b2c20",
+                color: "#fff",
+              },
+            }}
+          >
+            <ArrowBackIosIcon sx={{ fontSize: "19px" }} />
+          </IconButton>
+          <IconButton
+            onClick={() => sliderRef.current?.handleScroll("right")}
+            sx={{
+              p: 1.5,
+              backgroundColor: "rgba(233, 150, 122, 0.5)",
+              "&:hover": {
+                backgroundColor: "#4b2c20",
+                color: "#fff",
+              },
+            }}
+          >
+            <ArrowForwardIosIcon sx={{ fontSize: "19px" }} />
+          </IconButton>
+        </Box>
         <Typography
           variant="h4"
           sx={{
-            mb: 5,
-            textAlign: "center",
             color: "#4b2c20",
-            fontFamily: "var(--font-shabnam)",
-            position: "relative",
-            zIndex: 2,
+            fontWeight: "bold",
           }}
         >
           چوکوبار امروز چی پخته؟
         </Typography>
-
-        <IconButton
-          onClick={() => sliderRef.current?.handleScroll("left")}
-          sx={{
-            p: 2,
-            m: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(233, 150, 122, 0.5)",
-            "&:hover": {
-              backgroundColor: "#4b2c20",
-              color: "#fff",
-            },
-          }}
-        >
-          <ArrowBackIosIcon sx={{ fontSize: "19px" }} />
-        </IconButton>
-        <IconButton
-          onClick={() => sliderRef.current?.handleScroll("right")}
-          sx={{
-            p: 2,
-            m: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(233, 150, 122, 0.5)",
-            "&:hover": {
-              backgroundColor: "#4b2c20",
-              color: "#fff",
-            },
-          }}
-        >
-          <ArrowForwardIosIcon sx={{ fontSize: "19px" }} />
-        </IconButton>
       </Box>
 
       <Box
@@ -291,7 +283,7 @@ export default function ProductsList() {
           position: "absolute",
           left: 0,
           right: 0,
-          top: "48%",
+          top: "50%",
           bottom: 0,
           background: "linear-gradient(180deg, #d8a178 0%, #c98d63 100%)",
           zIndex: 0,
@@ -302,9 +294,10 @@ export default function ProductsList() {
         sx={{
           display: "flex",
           overflow: "auto",
-          pb: 3,
-          gap: 3,
-          "&::-webkit-scrollbar": { height: "8px" },
+          pb: 2,
+          position: "relative",
+          zIndex: 1,
+          "&::-webkit-scrollbar": { height: "6px" },
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: "#4b2c20",
             borderRadius: 6,
@@ -312,70 +305,82 @@ export default function ProductsList() {
         }}
       >
         <ProductSlider ref={sliderRef}>
-          {bestSellers.map((item) => (
-            <Card
-              key={item.title}
-              sx={{
-                minWidth: 230,
-                p: 2,
-                mt: 2,
-                mb: 2,
-                borderRadius: 4,
-                flexShrink: 0,
-                overflow: "hidden",
-                background: "rgba(255, 255, 255, 0.16)",
-                backdropFilter: "blur(22px)",
-                WebkitBackdropFilter: "blur(22px)",
-                border: "1px solid rgba(255, 255, 255, 0.24)",
-
-                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)",
-
-                transition: "all 0.3s ease",
-              }}
-            >
-              <CardMedia
+          {bestSellers.map((item) => {
+            const quantity = getProductQuantity(item.id);
+            return (
+              <Card
+                key={item.id}
                 sx={{
-                  height: 190,
-                  width: "100%",
-                  objectFit: "cover",
-                  display: "block",
+                  minWidth: { xs: 260, sm: 280 },
+                  p: 2.5,
                   borderRadius: 3,
-                }}
-                component="img"
-                src={item.image}
-                alt={item.title}
-              />
-              <Typography
-                variant="body1"
-                sx={{
-                  fontFamily: "var(--font-shabnam)",
-                  fontWeight: "600",
-                  mb: 1,
+                  flexShrink: 0,
+                  backgroundColor: "rgba(255,255,255,0.35)",
+                  // border: "1px solid",
+                  boxShadow: "0 2px 12px rgba(0, 0, 0, 0.05)",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                  },
                 }}
               >
-                {item.title}
-              </Typography>
-              <Typography variant="body2" sx={{ color: "gray", mb: 2 }}>
-                <Typography variant="caption">{item.price}تومان</Typography>
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                <DetailButton
-                  sx={{ color: "#4b2c20" }}
-                  fullWidth
-                  variant="outlined"
+                <CardMedia
+                  sx={{
+                    height: 190,
+                    width: "100%",
+                    objectFit: "cover",
+                    mb: 2,
+                    borderRadius: 2,
+                  }}
+                  component="img"
+                  src={item.image}
+                  alt={item.title}
+                />
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontFamily: "var(--font-shabnam)",
+                    fontWeight: "600",
+                    mb: 1,
+                    color: "#2d2d2d",
+                  }}
                 >
-                  <Typography variant="caption">جزئیات محصول</Typography>
-                </DetailButton>
-                <BuyButton
-                  fullWidth
-                  variant="contained"
-                  onClick={() => handleIncrease(item)}
+                  {item.title}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "gray", mb: 2 }}>
+                  {item.price}
+                </Typography>
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}
                 >
-                  <Typography variant="caption">میخرم</Typography>
-                </BuyButton>
-              </Box>
-            </Card>
-          ))}
+                  <DetailButton
+                    onClick={() => handleDetailClick(item)}
+                    sx={{ color: "#4b2c20" }}
+                    fullWidth
+                    variant="outlined"
+                  >
+                    <Typography variant="caption">جزئیات محصول</Typography>
+                  </DetailButton>
+                  {quantity > 0 ? (
+                    <QuantityButton
+                      quantity={quantity}
+                      onIncrease={() => handleIncrease(item)}
+                      onDecrease={() => handleDecrease(item.id)}
+                    />
+                  ) : (
+                    <BuyButton
+                      fullWidth
+                      variant="contained"
+                      onClick={() => handleIncrease(item)}
+                    >
+                      <Typography variant="caption">میخرم</Typography>
+                    </BuyButton>
+                  )}
+                </Box>
+              </Card>
+            );
+          })}
         </ProductSlider>
       </Box>
     </Box>

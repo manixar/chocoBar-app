@@ -15,9 +15,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useRouter } from "next/router";
-
 import { useContext } from "react";
-import { CartContext } from "../../../context/CartContext";
+import { CartContext, useCart } from "@/context/CartContext";
+import MiniCartPopover from "../../MiniCartPopover/MiniCartPopover";
 
 const menuItems = [
   "کیک",
@@ -71,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
-  const { totalItems } = useContext(CartContext);
+  const { cartCount } = useContext(CartContext);
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -86,6 +86,27 @@ export default function Header() {
   const handleLogin = () => router.push("/login");
   const handleRegister = () => router.push("/register");
   const handleCart = () => router.push("/cart");
+  const [anchorElCart, setAnchorElCart] = React.useState(null);
+
+  const openCartPopover = (event) => {
+    setAnchorElCart(event.currentTarget);
+  };
+
+  const closeCartPopover = () => {
+    setAnchorElCart(null);
+  };
+
+  const goToCartPage = () => {
+    closeCartPopover();
+    router.push("/cart");
+  };
+  const continueShopping = () => {
+    closeCartPopover();
+    // router.push("/products");
+    //BERE SAFHE MAHSOOLAT
+  };
+
+  const isCartOpen = Boolean(anchorElCart);
 
   return (
     <AppBar
@@ -243,11 +264,22 @@ export default function Header() {
             mr: { xs: 1, sm: 3 },
           }}
         >
-          <IconButton color="inherit" onClick={handleCart} sx={{ ml: 0.5 }}>
-            <Badge badgeContent={totalItems} color="error">
+          <IconButton
+            color="inherit"
+            onClick={openCartPopover}
+            sx={{ ml: 0.5 }}
+          >
+            <Badge badgeContent={cartCount} color="error">
               <ShoppingCartOutlinedIcon />
             </Badge>
           </IconButton>
+          <MiniCartPopover
+            open={isCartOpen}
+            anchorEl={anchorElCart}
+            onClose={closeCartPopover}
+            onContinueShopping={continueShopping}
+            onCheckout={goToCartPage}
+          />
         </Box>
       </Toolbar>
     </AppBar>
