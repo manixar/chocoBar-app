@@ -1,14 +1,5 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardMedia,
-  IconButton,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { useContext, useRef } from "react";
-import { CartContext } from "@/context/CartContext";
+import { Box, Card, CardMedia, IconButton, Typography } from "@mui/material";
+import { useRef } from "react";
 import ProductSlider from "../ProductSlider/ProductSlider";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -205,9 +196,9 @@ export default function ProductsList() {
     addToCart(product);
   };
 
-  const handleDecrease = (product) => {
-    console.log("محصول", product, "حذف شد");
-    removeFromCart(product);
+  const handleDecrease = (id) => {
+    console.log("محصول", id, "حذف شد");
+    removeFromCart(id);
   };
 
   const handleDetailClick = (product) => {

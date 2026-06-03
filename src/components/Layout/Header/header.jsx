@@ -71,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
-  const { cartCount } = useContext(CartContext);
+  const { cartCount } = useCart();
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -87,6 +87,10 @@ export default function Header() {
   const handleRegister = () => router.push("/register");
   const handleCart = () => router.push("/cart");
   const [anchorElCart, setAnchorElCart] = React.useState(null);
+
+  const handleOpenCart = (event) => setAnchorElCart(event.currentTarget);
+  const handleCloseCart = () => setAnchorElCart(null);
+  const handleCheckout = () => router.push("/cart");
 
   const openCartPopover = (event) => {
     setAnchorElCart(event.currentTarget);
@@ -264,21 +268,17 @@ export default function Header() {
             mr: { xs: 1, sm: 3 },
           }}
         >
-          <IconButton
-            color="inherit"
-            onClick={openCartPopover}
-            sx={{ ml: 0.5 }}
-          >
+          <IconButton color="inherit" onClick={handleOpenCart} sx={{ ml: 0.5 }}>
             <Badge badgeContent={cartCount} color="error">
               <ShoppingCartOutlinedIcon />
             </Badge>
           </IconButton>
           <MiniCartPopover
-            open={isCartOpen}
+            open={Boolean(anchorElCart)}
             anchorEl={anchorElCart}
-            onClose={closeCartPopover}
+            onClose={handleCloseCart}
             onContinueShopping={continueShopping}
-            onCheckout={goToCartPage}
+            onCheckout={handleCheckout}
           />
         </Box>
       </Toolbar>
