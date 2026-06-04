@@ -1,4 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
+import { motion } from "framer-motion";
 
 export default function HeroSection() {
   return (
@@ -10,7 +11,7 @@ export default function HeroSection() {
         justifyContent: "space-between",
         alignItems: "center",
         color: "white",
-        height: "400px",
+        minHeight: "100vh",
         overflow: "hidden",
         px: 6,
         //BACKGROUND
@@ -18,6 +19,7 @@ export default function HeroSection() {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
+        backgroundAttachment: "fixed",
         //ON BACKGROUND
         "&:before": {
           content: '""',
@@ -28,7 +30,16 @@ export default function HeroSection() {
       }}
     >
       <Box sx={{ position: "relative", zIndex: 1, mb: 3 }}>
-        <Typography variant="h3" sx={{ fontFamily: "var(--font-shabnam)" }}>
+        <Typography
+          component={motion.h3}
+          variant="h3"
+          sx={{
+            fontFamily: "var(--font-shabnam)",
+          }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           تازه ترین هارو از ما بخواهید
         </Typography>
         <Button
@@ -47,6 +58,10 @@ export default function HeroSection() {
               backgroundColor: "#f5e1c8",
             },
           }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          component={motion.button}
         >
           سفارش
         </Button>
