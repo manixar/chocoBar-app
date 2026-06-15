@@ -45,7 +45,7 @@ export default function Footer() {
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Typography Typography variant="body1" sx={{ mb: 2 }}>
+            <Typography variant="body1" sx={{ mb: 2 }}>
               دسترسی سریع
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>

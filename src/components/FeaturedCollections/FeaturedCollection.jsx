@@ -4,22 +4,22 @@ export default function FeaturedCollection() {
   const items = [
     {
       title: "کیک های خاص",
-      images: "/img/featured-cake.jpg",
+      images: "/img/featured-collection/featured-cake.jpg",
       // bg: "#f5e1c8",
     },
     {
       title: "شکلات های دست ساز",
-      images: "/img/featured-chocolate.jpg",
+      images: "/img/featured-collection/featured-chocolate.jpg",
       // bg: "#f6d8e6",
     },
     {
       title: "کوکی های تازه",
-      images: "/img/cookie.jpg",
+      images: "/img/featured-collection/featured-cooki.jpg",
       // bg: "#d5b1b1",
     },
     {
       title: "بیسکوکیک",
-      images: "/img/featured-biskocake.jpg",
+      images: "/img/featured-collection/featured-biskocake.jpg",
       // bg: "#d5b1b1",
     },
   ];
@@ -28,7 +28,7 @@ export default function FeaturedCollection() {
       <Typography
         variant="h3"
         sx={{
-          fontFamily: "var(--font-shabnam)",
+          fontFamily: "var(--fonts-shabnam)",
           mb: 3,
           textAlign: "center",
           color: "#4b2c20",
@@ -58,7 +58,7 @@ export default function FeaturedCollection() {
             <Typography
               variant="bocy2"
               sx={{
-                fontFamily: "var(--font-shabnam)",
+                fontFamily: "var(--fonts-shabnam)",
                 color: "#4b2c20",
                 whiteSpace: "nowrap",
               }}

@@ -236,7 +236,7 @@ export default function Header() {
               key={item}
               onClick={handleCloseNavMenu}
               sx={{
-                fontFamily: "var(--font-shabnam)",
+                fontFamily: "var(--fonts-shabnam)",
                 color: "#4b2c20",
                 textTransform: "none",
                 fontWeight: 600,
@@ -246,7 +246,7 @@ export default function Header() {
               <Typography
                 variant="body2"
                 sx={{
-                  fontFamily: "var(--font-shabnam)",
+                  fontFamily: "var(--fonts-shabnam)",
                   color: "#4b2c20",
                   fontSize: "16px",
                   whiteSpace: "nowrap",

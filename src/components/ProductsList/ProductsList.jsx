@@ -331,7 +331,7 @@ export default function ProductsList() {
                 <Typography
                   variant="body1"
                   sx={{
-                    fontFamily: "var(--font-shabnam)",
+                    fontFamily: "var(--fonts-shabnam)",
                     fontWeight: "600",
                     mb: 1,
                     color: "#2d2d2d",
@@ -345,12 +345,7 @@ export default function ProductsList() {
                 <Box
                   sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}
                 >
-                  <DetailButton
-                    onClick={() => handleDetailClick(item)}
-                    sx={{ color: "#4b2c20" }}
-                    fullWidth
-                    variant="outlined"
-                  >
+                  <DetailButton onClick={() => handleDetailClick(item)}>
                     <Typography variant="caption">جزئیات محصول</Typography>
                   </DetailButton>
                   {quantity > 0 ? (
@@ -360,11 +355,7 @@ export default function ProductsList() {
                       onDecrease={() => handleDecrease(item.id)}
                     />
                   ) : (
-                    <BuyButton
-                      fullWidth
-                      variant="contained"
-                      onClick={() => handleIncrease(item)}
-                    >
+                    <BuyButton onClick={() => handleIncrease(item)}>
                       <Typography variant="caption">میخرم</Typography>
                     </BuyButton>
                   )}
